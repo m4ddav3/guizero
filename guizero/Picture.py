@@ -19,7 +19,7 @@ class Picture(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, image, grid=None, align=None):
+    def __init__(self, master, image, grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -39,6 +39,10 @@ class Picture(
             img = PhotoImage(master=self.tk.winfo_toplevel(), file=image)
             self._image = img
             self.tk.config(image=self._image)
+
+            if enabled == False:
+                self.tk.config(state="disabled")
+
 
         except TclError:
             self.tk.config(text="Image "+ self._image_name +" failed to load")

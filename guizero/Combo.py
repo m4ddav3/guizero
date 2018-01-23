@@ -12,7 +12,7 @@ class Combo(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, options, selected=None, command=None, grid=None, align=None):
+    def __init__(self, master, options, selected=None, command=None, grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -45,6 +45,9 @@ class Combo(
 
         # Create a tk OptionMenu object within this object
         self.tk = OptionMenu(master.tk, self._selected, *self._options, command=self._command)
+
+        if enabled == False:
+            self.tk.config(state="disabled")
 
         # Pack or grid self
         utils.auto_pack(self, master, grid, align)

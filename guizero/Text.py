@@ -12,7 +12,7 @@ class Text(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, text="", size=12, color="black", text_color=None, bg=None, font="Helvetica", grid=None, align=None):
+    def __init__(self, master, text="", size=12, color="black", text_color=None, bg=None, font="Helvetica", grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -35,6 +35,9 @@ class Text(
 
         # Create a tk Label object within this object
         self.tk = Label(master.tk, text=text, fg=self._current_color, bg=bg, font=(font, size))
+
+        if enabled == False:
+            self.tk.config(state="disabled")
 
         # Pack this object
         try:

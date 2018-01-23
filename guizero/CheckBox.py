@@ -12,7 +12,7 @@ class CheckBox(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, text, command=None, grid=None, align=None):
+    def __init__(self, master, text, command=None, grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -25,6 +25,9 @@ class CheckBox(
 
         # Create a tk Checkbutton object within this object
         self.tk = Checkbutton(master.tk, text=text, variable=self._value)
+
+        if enabled == False:
+            self.tk.config(state="disabled")
 
         # Add a command if there was one
         if command is not None:

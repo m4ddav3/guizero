@@ -15,7 +15,7 @@ class RadioButton(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, text, value, variable, command=None, grid=None, align=None):
+    def __init__(self, master, text, value, variable, command=None, grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -30,6 +30,9 @@ class RadioButton(
         # option was selected. This class should not be instantiated by a user
         # unless they know what they are doing.
         self.tk = Radiobutton(master.tk, text=self._text, value=self._value, variable=variable)
+
+        if enabled == False:
+            self.tk.config(state="disabled")
 
 
     # PROPERTIES

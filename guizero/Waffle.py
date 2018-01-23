@@ -11,13 +11,13 @@ class Waffle(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, height=3, width=3, dim=20, pad=5, color="white", dotty=False, grid=None, align=None, command=None, remember=True):
+    def __init__(self, master, height=3, width=3, dim=20, pad=5, color="white", dotty=False, grid=None, align=None, command=None, remember=True, enabled=True):
 
         self._master = master
         self._grid = grid
         self._align = align
         self._visible = True
-        self._enabled = True
+        self._enabled = enabled
 
     	# Description of this object (for friendly error messages)
         self.description = "[Waffle] object ("+str(height)+"x"+str(width)+")"

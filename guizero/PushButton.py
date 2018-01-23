@@ -12,7 +12,7 @@ class PushButton(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, command, args=None, text="Button", icon=None, pady=10, padx=10, grid=None, align=None):
+    def __init__(self, master, command, args=None, text="Button", icon=None, pady=10, padx=10, grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -34,6 +34,9 @@ class PushButton(
 
         # Add padding if necessary
         self.tk.config(pady=pady, padx=padx)
+
+        if enabled == False:
+            self.tk.config(state="disabled")
 
         # Setup events for press and release
         self.tk.bind("<ButtonPress>", self._on_press)

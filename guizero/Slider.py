@@ -12,7 +12,7 @@ class Slider(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, start=0, end=100, horizontal=True, command=None, grid=None, align=None):
+    def __init__(self, master, start=0, end=100, horizontal=True, command=None, grid=None, align=None, enabled=True):
 
         # If you specify a command to the slider, it must take one argument as it will be given
         # the slider's current value
@@ -30,6 +30,9 @@ class Slider(
 
         # Create a tk Scale object within this object
         self.tk = Scale(master.tk, from_=start, to=end, orient=orient, command=command)
+
+        if enabled == False:
+            self.tk.config(state="disabled")
 
         # Pack this object
         try:

@@ -12,7 +12,7 @@ class TextBox(
     DisplayMixin, 
     ReprMixin):
 
-    def __init__(self, master, text="", width=10, grid=None, align=None):
+    def __init__(self, master, text="", width=10, grid=None, align=None, enabled=True):
 
         self._master = master
         self._grid = grid
@@ -28,6 +28,10 @@ class TextBox(
 
         # Create a tk Label object within this object
         self.tk = Entry(master.tk, textvariable=self._text, width=width)
+
+        if enabled == False:
+            self.tk.config(state="disabled")
+
 
         # Pack or grid depending on parent
         utils.auto_pack(self, master, grid, align)
