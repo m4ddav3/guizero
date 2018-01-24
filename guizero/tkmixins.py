@@ -11,7 +11,7 @@ class ScheduleMixin():
         """Repeat `function` every `time` milliseconds."""
         callback_id = self.tk.after(time, self._call_wrapper, time, function, *args)
         self._callback[function] = [callback_id, True]
-        
+
     def cancel(self, function):
         """Cancel the scheduled `function` calls."""
         if function in self._callback.keys():
@@ -23,6 +23,8 @@ class ScheduleMixin():
 
     def _call_wrapper(self, time, function, *args):
         """Fired by tk.after, gets the callback and either executes the function and cancels or repeats"""
+        if not self.enabled:
+            return
         # execute the function
         function(*args)
         repeat = self._callback[function][1]
@@ -39,7 +41,7 @@ class DestroyMixin():
         """Destroy the object."""
         self.tk.destroy()
 
-class EnableMixin():    
+class EnableMixin():
     @property
     def enabled(self):
         button_state = self.tk.cget("state")
@@ -51,7 +53,7 @@ class EnableMixin():
             self.enable()
         else:
             self.disable()
-    
+
     def disable(self):
         """Disable the widget."""
         self.tk.configure(state="disabled")
@@ -70,7 +72,7 @@ class DisplayMixin():
     @property
     def visible(self):
         return self._visible
-    
+
     @visible.setter
     def visible(self, value):
         if value:
@@ -89,6 +91,7 @@ class DisplayMixin():
     def show(self):
         """Show the widget."""
         utils.auto_pack(self, self.master, self.grid, self.align)
+        self.tk.update()
         self._visible = True
 
 class SizeMixin():
