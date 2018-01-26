@@ -20,5 +20,6 @@ from .RadioButton import RadioButton
 from .Slider import Slider
 from .Text import Text
 from .TextBox import TextBox
+from .TextArea import TextArea
 from .PushButton import PushButton
 from .Waffle import Waffle

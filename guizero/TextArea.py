@@ -1,20 +1,21 @@
-from tkinter import Entry, StringVar, END
+from tkinter import Text, StringVar, END
 from .mixins import WidgetMixin
 from .tkmixins import ScheduleMixin, DestroyMixin, EnableMixin, FocusMixin, DisplayMixin, ReprMixin
 from . import utilities as utils
 
-class TextBox(
-    WidgetMixin, 
-    ScheduleMixin, 
-    DestroyMixin, 
-    EnableMixin, 
-    FocusMixin, 
-    DisplayMixin, 
+class TextArea(
+    WidgetMixin,
+    ScheduleMixin,
+    DestroyMixin,
+    EnableMixin,
+    FocusMixin,
+    DisplayMixin,
     ReprMixin):
 
     def __init__(self, master, text="", width=10, grid=None, align=None, colour=None, bgcolour=None):
 
         self._master = master
+        self._text = text
         self._grid = grid
         self._align = align
         self._visible = True
@@ -22,14 +23,13 @@ class TextBox(
         self._bgcolour = bgcolour
 
         # Description of this object (for friendly error messages)
-        self.description = "[TextBox] object with text \"" + str(text) + "\""
-
-        # Set up controlling string variable
-        self._text = StringVar()
-        self._text.set( str(text) )
+        self.description = "[TextArea] object with text \"" + str(text) + "\""
 
         # Create a tk Label object within this object
-        self.tk = Entry(master.tk, textvariable=self._text, width=width, foreground=self._colour, background=self._bgcolour)
+        self.tk = Text(master.tk, width=width, foreground=self._colour, background=self._bgcolour)
+
+        # Add the specified text
+        self.tk.insert(END, self._text)
 
         # Pack or grid depending on parent
         utils.auto_pack(self, master, grid, align)
@@ -40,12 +40,15 @@ class TextBox(
     # The text value
     @property
     def value(self):
-        return self._text.get()
+        return self._text
 
     @value.setter
     def value(self, value):
-        self._text.set( str(value) )
-        self.description = "[TextBox] object with text \"" + str(value) + "\""
+        self._text = value
+        self.tk.delete(1.0, END)
+        self.tk.insert(END, self._text)
+
+        self.description = "[TextArea] object with text \"" + str(value) + "\""
 
     # Colour of the text
     @property
@@ -77,7 +80,7 @@ class TextBox(
     # Append text
     def append(self, text):
         self.value = self.value + str(text)
-        self.description = "[TextBox] object with text \"" + self.value + "\""
+        self.description = "[TextArea] object with text \"" + self.value + "\""
 
 
     # DEPRECATED METHODS
@@ -90,5 +93,5 @@ class TextBox(
     # Sets the text
     def set(self, text):
         self._text.set( str(text) )
-        self.description = "[Text] object with text \"" + str(text) + "\""
+        self.description = "[TextArea] object with text \"" + str(text) + "\""
         utils.deprecated("TextBox set() is deprecated. Please use the value property instead.")
